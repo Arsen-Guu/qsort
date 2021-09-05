@@ -1,0 +1,48 @@
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    srand(time(NULL));
+    int n = 1000;
+    cout << "Количество элементов в массиве : " << n;
+    cout << "\n";
+    float* u = new float[n];
+    for (int i = 0; i < n; i++)
+    {
+        u[i] = rand() / 1000.0f;
+        cout<< u[i] << " ";
+    }
+    cout<< endl;
+    StartCounter();
+    qsort(u, 0, (n-1));
+    cout << GetCounter() << "\n"; //It prints accurate time like 998
+    cout << "Отсортированный массив: ";
+    for (int i = 0; i < n; i++) {
+        cout<< u[i] << " ";
+    }
+    cout << endl;
+    free(u);
+    return 0;
+}
+void qsort(float* m, int left, int right)
+{
+    int i = left, j = right;
+    float temp, pivot = m[(left + right) / 2];
+
+    while (i <= j)
+    {
+        while (m[i] < pivot) i++;
+        while (m[j] > pivot) j--;
+        if (i <= j)
+        {
+            if (m[i] > m[j])
+            {
+                temp = m[i]; 
+                m[i] = m[j]; 
+                m[j] = temp;
+            }
+            i++; j--;
+        }
+    }
+    if (left < j) qsort(m, left, j);
+    if (i < right) qsort(m, i, right);
+}
